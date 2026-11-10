@@ -18,8 +18,9 @@ endif()
 
 add_executable(00_basic_select 00_basic_select.cpp library.cpp)
 add_executable(01_metric_swap 01_metric_swap.cpp library.cpp)
+add_executable(02_set_stack 02_set_stack.cpp 02_set_stack_split.cpp)
 
-foreach(TARGET 00_basic_select 01_metric_swap)
+foreach(TARGET 00_basic_select 01_metric_swap 02_set_stack)
     target_link_libraries(${TARGET} PRIVATE hqp_tasks::hqp_tasks HQP::HQP)
     target_include_directories(${TARGET} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
     add_test(NAME test_${TARGET} COMMAND ${TARGET})
