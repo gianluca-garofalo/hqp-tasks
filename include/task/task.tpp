@@ -1,6 +1,10 @@
+#include <cassert>
+#include <stdexcept>
+
 namespace hqp {
 
-void TaskBase::set_mask(Eigen::VectorXi const& mask) {
+// Non-template definitions are inline: this file is included from task.hpp.
+inline void TaskBase::set_mask(Eigen::VectorXi const& mask) {
     mask_ = mask;
 }
 
@@ -52,7 +56,7 @@ Derived* TaskPtr::cast() {
 }
 
 
-std::tuple<Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd, Eigen::VectorXi> StackOfTasks::get_stack() {
+inline std::tuple<Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd, Eigen::VectorXi> StackOfTasks::get_stack() {
     if (this->empty()) {
         return {Eigen::MatrixXd(0, 0), Eigen::VectorXd(0), Eigen::VectorXd(0), Eigen::VectorXi(0)};
     }
@@ -85,10 +89,10 @@ std::tuple<Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd, Eigen::VectorXi> S
 }
 
 
-void StackOfTasks::set_stack(Eigen::MatrixXd const& matrix,
-                             Eigen::VectorXd const& lower,
-                             Eigen::VectorXd const& upper,
-                             Eigen::VectorXi const& breaks) {
+inline void StackOfTasks::set_stack(Eigen::MatrixXd const& matrix,
+                                    Eigen::VectorXd const& lower,
+                                    Eigen::VectorXd const& upper,
+                                    Eigen::VectorXi const& breaks) {
     assert(matrix.rows() == upper.size() && upper.size() == lower.size() &&
            "matrix, upper, lower must have the same number of rows");
     assert(breaks.size() > 0 && "breaks must not be empty");
