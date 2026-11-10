@@ -1,24 +1,19 @@
 #!/usr/bin/env python3
 """
-Example demonstrating the HQP Python bindings.
+Example combining the HQP solver with the stack of tasks.
 
 This example shows how to:
 1. Use the solver directly with numpy arrays
 2. Build hierarchical problems with StackOfTasks
 3. Use the one-shot solve convenience function
+
+It needs both Python modules on PYTHONPATH: pyhqp, built from
+Weighted-Hierarchical-QP, and pyhqp_tasks, built from this repository.
 """
 
-import os
-import sys
-
 import numpy as np
-
-# Add the build directory to Python path
-sys.path.insert(
-    0, os.path.join(os.path.dirname(__file__), "..", "build", "python", "Release")
-)
-
-import pyhqp  # noqa: E402
+import pyhqp
+import pyhqp_tasks
 
 
 def main():
@@ -50,7 +45,7 @@ def main():
     # 2. Task-based usage with StackOfTasks
     print("\n2. Task-based hierarchical setup:")
 
-    stack = pyhqp.StackOfTasks()
+    stack = pyhqp_tasks.StackOfTasks()
     stack.add(np.eye(2), np.array([-0.1, -0.1]), np.array([0.1, 0.1]))
     stack.add(np.array([[1.0, 1.0]]), np.array([0.9]), np.array([1.1]))
     stack.add(np.array([[1.0, -1.0]]), np.array([-0.2]), np.array([0.2]))
@@ -72,7 +67,7 @@ def main():
 
     # 4. Individual Task objects
     print("\n4. Task objects:")
-    task = pyhqp.Task(np.eye(3), -np.ones(3), np.ones(3))
+    task = pyhqp_tasks.Task(np.eye(3), -np.ones(3), np.ones(3))
     print(f"   {task}")
     print(f"   Matrix:\n{task.matrix}")
 
